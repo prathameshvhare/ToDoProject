@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: linear-gradient(135deg, #006eff, #6f00ff);
+      }
+      .box {
+        width: 400px;
+        background-color: white;
+        padding: 24px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .box h1 {
+        padding: 8px;
+        font-weight: 500;
+        color: #006eff;
+      }
+      .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 12px;
+      }
+      .form .uname {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .form .pword {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .form .pword a {
+        font-size: 14px;
+        text-decoration: none;
+        color: #006eff;
+        padding-left: 8px;
+      }
+      .form input {
+        padding: 12px;
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+      }
+      .loginBtn {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+      #loginBtn {
+        background-image: linear-gradient(160deg, #006eff, #6f00ff);
+        cursor: pointer;
+        border: none;
+        color: white;
+        font-weight: 700;
+      }
+      .loginBtn p a {
+        text-decoration: none;
+        color: #006eff;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>Login</h1>
+      <form class="form" action="validateLogin" method="POST">
+        <div class="uname">
+          <label for="email">Email</label>
+          <input type="text" name="email" />
+        </div>
+        <div class="pword">
+          <label for="pword">Password</label>
+          <input type="password" name="pword" />
+          <a href="">Forgot Password</a>
+        </div>
+        <div class="loginBtn">
+          <input id="loginBtn" type="submit" value="LOGIN" name="loginBtn" />
+          <p>Don't have an account? <a href="Registration.html">REGISTER</a></p>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
