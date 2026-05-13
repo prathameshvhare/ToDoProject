@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService {
 		return userrepo.isValidUser(model);
 	}
 
+	@Override
+	public UserModel findUserByCredentials(UserModel model) {
+		return userrepo.findUserByCredentials(model);
+	}
+
 }

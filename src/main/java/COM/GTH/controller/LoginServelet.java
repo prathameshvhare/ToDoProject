@@ -24,19 +24,27 @@ public class LoginServelet extends HttpServlet {
 		String email=request.getParameter("email");
 		String password=request.getParameter("pword");
 		
-		UserModel model=new UserModel();
-		UserService userservice=new UserServiceImpl();
+		UserModel model = new UserModel();
+		UserService userservice = new UserServiceImpl();
 		model.setEmail(email);
 		model.setPassword(password);
-		
-		boolean result=userservice.isValidUser(model);
-		if(result) {
-			
-			HttpSession session=request.getSession();
-			
-			session.setAttribute("email",model.getEmail());
-			response.sendRedirect("Dashboard.html");
-			
+
+		UserModel loggedIn = userservice.findUserByCredentials(model);
+		if (loggedIn != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("email", loggedIn.getEmail());
+			session.setAttribute("userId", loggedIn.getUser_id());
+			String userName = loggedIn.getName();
+			if (userName == null || userName.isBlank()) {
+				String em = loggedIn.getEmail();
+				userName = (em != null && em.contains("@")) ? em.substring(0, em.indexOf('@')) : "User";
+			} else {
+				userName = userName.trim();
+			}
+			session.setAttribute("userName", userName);
+			response.sendRedirect("dashboard");
+		} else {
+			response.sendRedirect("login.html?error=1");
 		}
 		
 		

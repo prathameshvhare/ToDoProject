@@ -7,4 +7,7 @@ public interface UserRepo {
 	
 	public boolean isValidUser(UserModel model);
 
+	/** Returns the matching user with primary key set, or null if not found. */
+	public UserModel findUserByCredentials(UserModel model);
+
 }

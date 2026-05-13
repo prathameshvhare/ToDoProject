@@ -51,8 +51,144 @@ body{
 
 .main-content{
     margin-left:250px;
-    width:100%;
+    width:calc(100% - 250px);
+    max-width:100%;
     padding:30px;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    box-sizing:border-box;
+}
+
+.task-panel{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    margin-top:8px;
+    flex:1;
+}
+
+.task-panel > *{
+    width:100%;
+    max-width:720px;
+}
+
+.task-panel > h2{
+    text-align:center;
+}
+
+.task-panel > p{
+    text-align:center;
+}
+
+.task-panel .task-form,
+.task-panel .task-msg{
+    text-align:left;
+}
+
+.task-panel > .task-table-wrap{
+    max-width:960px;
+}
+
+.page-intro{
+    margin-top:24px;
+    background:white;
+    border-radius:10px;
+    padding:1.75rem 2rem;
+    box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+    color:#64748b;
+    line-height:1.6;
+}
+
+.task-form{
+    margin-top:24px;
+    background:white;
+    border-radius:10px;
+    padding:1.75rem 2rem;
+    box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+    max-width:640px;
+}
+
+.task-form h2{
+    color:#1e293b;
+    margin-bottom:1rem;
+    font-size:1.35rem;
+}
+
+.task-form label{
+    display:block;
+    font-size:0.875rem;
+    color:#475569;
+    margin:0.75rem 0 0.35rem;
+}
+
+.task-form input[type=text],
+.task-form input[type=date],
+.task-form textarea,
+.task-form select{
+    width:100%;
+    padding:0.65rem 0.75rem;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:1rem;
+}
+
+.task-form textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.task-form input[type=submit]{
+    margin-top:1.25rem;
+    padding:0.65rem 1.25rem;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+.task-form input[type=submit]:hover{
+    background:#1d4ed8;
+}
+
+.task-msg{
+    margin-top:1rem;
+    padding:0.75rem 1rem;
+    background:#dcfce7;
+    color:#166534;
+    border-radius:8px;
+    max-width:640px;
+}
+
+.task-msg a{
+    color:#166534;
+    font-weight:bold;
+}
+
+.task-msg-error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.task-msg-error a{
+    color:#991b1b;
+}
+
+.task-table-wrap{
+    margin-top:24px;
+    overflow-x:auto;
+    background:white;
+    border-radius:10px;
+    padding:1.25rem;
+    box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.task-actions a{
+    color:#2563eb;
+    margin-right:0.75rem;
 }
 
 /* Top Navbar */
@@ -76,6 +212,16 @@ body{
 
 .date{
     color:#64748b;
+}
+
+.main-content > h2{
+    margin-top:24px;
+    color:#1e293b;
+    font-size:1.35rem;
+}
+
+.main-content > p{
+    margin-top:10px;
 }
 
 /* Dashboard Cards */
@@ -179,6 +325,7 @@ table td{
 
     .main-content{
         margin-left:0;
+        width:100%;
     }
 
     body{

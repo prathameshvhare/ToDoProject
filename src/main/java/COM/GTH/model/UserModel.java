@@ -26,8 +26,15 @@ public class UserModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getMobileNo() {
+		return mobileNo;
+	}
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
 	private String name;
 	private String email;
 	private String password;
+	private String mobileNo;
 
 }

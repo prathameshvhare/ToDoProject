@@ -19,12 +19,15 @@ public class RegisterServelet extends HttpServlet {
 		String name=request.getParameter("name");
 		String email=request.getParameter("email");
 		String password=request.getParameter("pword");
+		String No=request.getParameter("mobileNo");
 		
 		
 		UserModel model=new UserModel();
 		model.setName(name);
 		model.setEmail(email);
 		model.setPassword(password);
+		model.setMobileNo(No);
+
 		
 		UserService userservice=new UserServiceImpl();
 		boolean result=userservice.isAddUser(model);
