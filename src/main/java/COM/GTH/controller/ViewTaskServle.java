@@ -85,30 +85,26 @@ public class ViewTaskServle extends HttpServlet {
 		        + "style='padding:8px 15px; border:none; background:#2d89ef; color:white; border-radius:4px; cursor:pointer;'>Filter</button>");
 
 		out.println("</div>");
-		out.println("<script>\n"
-				+ "function loadTaskTable() {\n"
-				+ "  var keyword = document.getElementById('searchBox').value;\n"
-				+ "  var pri = document.getElementById('filterPriority').value;\n"
-				+ "  var st = document.getElementById('filterStatus').value;\n"
-				+ "  var dl = document.getElementById('filterDeadline').value;\n"
-				+ "  var qs = new URLSearchParams();\n"
-				+ "  if (keyword) qs.set('keyword', keyword);\n"
-				+ "  if (pri) qs.set('priority', pri);\n"
-				+ "  if (st) qs.set('status', st);\n"
-				+ "  if (dl) qs.set('deadline', dl);\n"
-				+ "  fetch('search?' + qs.toString(), { credentials: 'same-origin' })\n"
-				+ "    .then(function (r) { return r.text(); })\n"
-				+ "    .then(function (data) {\n"
-				+ "      var el = document.getElementById('taskContainer');\n"
-				+ "      if (el) el.innerHTML = data;\n"
-				+ "    });\n"
-				+ "}\n"
-				+ "document.getElementById('searchBox').addEventListener('keyup', loadTaskTable);\n"
-				+ "document.getElementById('filterBtn').addEventListener('click', function (e) {\n"
-				+ "  e.preventDefault();\n"
-				+ "  loadTaskTable();\n"
-				+ "});\n"
-				+ "</script>");
+
+		out.println("<script>");
+		out.println("function loadTaskTable(){");
+		out.println(" var keyword=document.getElementById('searchBox').value;");
+		out.println(" var priority=document.getElementById('filterPriority').value;");
+		out.println(" var status=document.getElementById('filterStatus').value;");
+		out.println(" var deadline=document.getElementById('filterDeadline').value;");
+
+		out.println(" fetch('search?keyword='+keyword+'&priority='+priority+'&status='+status+'&deadline='+deadline)");
+		out.println(" .then(response => response.text())");
+		out.println(" .then(data => {");
+		out.println("   document.getElementById('taskContainer').innerHTML=data;");
+		out.println(" });");
+		out.println("}");
+
+		out.println("document.getElementById('searchBox').onkeyup=loadTaskTable;");
+		out.println("document.getElementById('filterBtn').onclick=loadTaskTable;");
+		out.println("</script>");
+		
+		
 		List<TaskModel> list = taskService.listTasksForUser(userId);
 
 		out.println("<div id='taskContainer'>");
