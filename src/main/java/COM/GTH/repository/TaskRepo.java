@@ -19,4 +19,9 @@ public interface TaskRepo {
 	List<TaskModel> findPendingTasksByUserId(int userId);
 
 	List<TaskModel> findCompletedTasksByUserId(int userId);
+	
+	public List<TaskModel> searchTasks(int userId, String keyword);
+
+	List<TaskModel> findTasksWithFilters(int userId, String keyword, String priority, String status, String deadline);
+
 }

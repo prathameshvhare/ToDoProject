@@ -156,4 +156,62 @@ public class TaskRepoImpl extends DBConfig implements TaskRepo {
 		}
 		return list;
 	}
+
+	public List<TaskModel> searchTasks(int userId, String keyword) {
+		String kw = keyword == null ? "" : keyword;
+		return findTasksWithFilters(userId, kw, null, null, null);
+	}
+
+	@Override
+	public List<TaskModel> findTasksWithFilters(int userId, String keyword, String priority, String status,
+			String deadline) {
+		List<TaskModel> list = new ArrayList<>();
+		try {
+			StringBuilder sql = new StringBuilder(
+					"SELECT task_id, task_title, task_description, deadline, priority, status, user_id FROM task WHERE user_id=?");
+			if (keyword != null && !keyword.isBlank()) {
+				sql.append(" AND task_title LIKE ?");
+			}
+			if (priority != null && !priority.isBlank()) {
+				sql.append(" AND priority=?");
+			}
+			if (status != null && !status.isBlank()) {
+				sql.append(" AND status=?");
+			}
+			if (deadline != null && !deadline.isBlank()) {
+				sql.append(" AND deadline=?");
+			}
+			sql.append(" ORDER BY task_id DESC");
+			stmt = conn.prepareStatement(sql.toString());
+			int i = 1;
+			stmt.setInt(i++, userId);
+			if (keyword != null && !keyword.isBlank()) {
+				stmt.setString(i++, "%" + keyword + "%");
+			}
+			if (priority != null && !priority.isBlank()) {
+				stmt.setString(i++, priority);
+			}
+			if (status != null && !status.isBlank()) {
+				stmt.setString(i++, status);
+			}
+			if (deadline != null && !deadline.isBlank()) {
+				stmt.setString(i++, deadline);
+			}
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				TaskModel t = new TaskModel();
+				t.setTaskId(rs.getInt("task_id"));
+				t.setTaskTitle(rs.getString("task_title"));
+				t.setDescription(rs.getString("task_description"));
+				t.setDeadline(rs.getString("deadline"));
+				t.setPriority(rs.getString("priority"));
+				t.setStatus(rs.getString("status"));
+				t.setUserId(rs.getInt("user_id"));
+				list.add(t);
+			}
+		} catch (Exception ex) {
+			System.out.println("Exception :" + ex);
+		}
+		return list;
+	}
 }

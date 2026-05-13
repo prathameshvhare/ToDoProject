@@ -52,9 +52,66 @@ public class ViewTaskServle extends HttpServlet {
 
 		out.println("<h2>All tasks</h2>");
 		out.println("<p><a href='addTask'>Add task</a></p>");
+		out.println("<div style='display:flex; align-items:center; gap:10px; margin-top:25px; flex-wrap:nowrap;'>");
 
+		// Search Box
+		out.println("<input type='text' id=\"searchBox\" name='keyword' placeholder='Search task by name' "
+		        + "style='width:350px; padding:10px; border:2px solid black; border-radius:5px; font-size:15px;'>");
+
+		// Priority
+		out.println("<select id='filterPriority' name='priority' "
+		        + "style='padding:8px; width:140px; border:1px solid black; border-radius:4px;'>"
+		        + "<option value=''>Select Priority</option>"
+		        + "<option value='High'>High</option>"
+		        + "<option value='Medium'>Medium</option>"
+		        + "<option value='Low'>Low</option>"
+		        + "</select>");
+
+		// Status
+		out.println("<select id='filterStatus' name='status' "
+		        + "style='padding:8px; width:140px; border:1px solid black; border-radius:4px;'>"
+		        + "<option value=''>Select Status</option>"
+		        + "<option value='Pending'>Pending</option>"
+		        + "<option value='inProgress'>In Progress</option>"
+		        + "<option value='Completed'>Completed</option>"
+		        + "</select>");
+
+		// Date
+		out.println("<input type='date' id='filterDeadline' name='deadline' "
+		        + "style='padding:8px; border:1px solid black; border-radius:4px;'>");
+
+		// Button
+		out.println("<button type='button' id='filterBtn' "
+		        + "style='padding:8px 15px; border:none; background:#2d89ef; color:white; border-radius:4px; cursor:pointer;'>Filter</button>");
+
+		out.println("</div>");
+		out.println("<script>\n"
+				+ "function loadTaskTable() {\n"
+				+ "  var keyword = document.getElementById('searchBox').value;\n"
+				+ "  var pri = document.getElementById('filterPriority').value;\n"
+				+ "  var st = document.getElementById('filterStatus').value;\n"
+				+ "  var dl = document.getElementById('filterDeadline').value;\n"
+				+ "  var qs = new URLSearchParams();\n"
+				+ "  if (keyword) qs.set('keyword', keyword);\n"
+				+ "  if (pri) qs.set('priority', pri);\n"
+				+ "  if (st) qs.set('status', st);\n"
+				+ "  if (dl) qs.set('deadline', dl);\n"
+				+ "  fetch('search?' + qs.toString(), { credentials: 'same-origin' })\n"
+				+ "    .then(function (r) { return r.text(); })\n"
+				+ "    .then(function (data) {\n"
+				+ "      var el = document.getElementById('taskContainer');\n"
+				+ "      if (el) el.innerHTML = data;\n"
+				+ "    });\n"
+				+ "}\n"
+				+ "document.getElementById('searchBox').addEventListener('keyup', loadTaskTable);\n"
+				+ "document.getElementById('filterBtn').addEventListener('click', function (e) {\n"
+				+ "  e.preventDefault();\n"
+				+ "  loadTaskTable();\n"
+				+ "});\n"
+				+ "</script>");
 		List<TaskModel> list = taskService.listTasksForUser(userId);
 
+		out.println("<div id='taskContainer'>");
 		if (list.isEmpty()) {
 			out.println("<p>No tasks yet.</p>");
 		} else {
@@ -75,6 +132,7 @@ public class ViewTaskServle extends HttpServlet {
 			out.println("</table>");
 			out.println("</div>");
 		}
+		out.println("</div>");
 
 		out.println("</div></div>");
 		out.println(WELCOME_JS);

@@ -21,4 +21,7 @@ public interface TaskService {
 	List<TaskModel> listCompletedTasksForUser(int userId);
 
 	int[] getDashboardCounts(int userId);
+	
+	List<TaskModel> serarchTasks(int userId,String keyword);
+	
 }

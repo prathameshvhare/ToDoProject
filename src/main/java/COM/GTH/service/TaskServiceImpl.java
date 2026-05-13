@@ -64,4 +64,10 @@ public class TaskServiceImpl implements TaskService {
 		}
 		return new int[] { list.size(), completed, pending, high };
 	}
+
+	@Override
+	public List<TaskModel> serarchTasks(int userId, String keyword) {
+		// TODO Auto-generated method stub
+		return taskRepo.searchTasks(userId, keyword);
+	}
 }
