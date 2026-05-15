@@ -93,10 +93,10 @@ public class ViewTaskServle extends HttpServlet {
 		out.println(" var status=document.getElementById('filterStatus').value;");
 		out.println(" var deadline=document.getElementById('filterDeadline').value;");
 
-		out.println(" fetch('search?keyword='+keyword+'&priority='+priority+'&status='+status+'&deadline='+deadline)");
+		out.println(" fetch('search?keyword='+encodeURIComponent(keyword)+'&priority='+encodeURIComponent(priority)+'&status='+encodeURIComponent(status)+'&deadline='+encodeURIComponent(deadline))");
 		out.println(" .then(response => response.text())");
 		out.println(" .then(data => {");
-		out.println("   document.getElementById('taskContainer').innerHTML=data;");
+		out.println("   var el=document.getElementById('taskContainer'); if(el) el.innerHTML=data;");
 		out.println(" });");
 		out.println("}");
 

@@ -47,8 +47,16 @@ public class SerarchServelet extends HttpServlet {
 		String priority = request.getParameter("priority");
 		String status = request.getParameter("status");
 		String deadline = request.getParameter("deadline");
+		String taskList = request.getParameter("taskList");
 
-		List<TaskModel> list = taskRepo.findTasksWithFilters(userId, keyword, priority, status, deadline);
+		List<TaskModel> list;
+		if ("pending".equalsIgnoreCase(taskList)) {
+			list = taskRepo.findPendingTasksWithFilters(userId, keyword, priority, deadline);
+		} else if ("completed".equalsIgnoreCase(taskList)) {
+			list = taskRepo.findCompletedTasksWithFilters(userId, keyword, priority, deadline);
+		} else {
+			list = taskRepo.findTasksWithFilters(userId, keyword, priority, status, deadline);
+		}
 
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();

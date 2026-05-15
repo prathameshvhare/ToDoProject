@@ -52,9 +52,51 @@ public class PendingTasksServlet extends HttpServlet {
 
 		out.println("<h2>Pending &amp; in progress</h2>");
 		out.println("<p><a href='viewTasks'>All tasks</a></p>");
+		out.println("<div style='display:flex; align-items:center; gap:10px; margin-top:25px; flex-wrap:nowrap;'>");
+
+		// Search Box
+		out.println("<input type='text' id=\"searchBox\" name='keyword' placeholder='Search task by name' "
+		        + "style='width:350px; padding:10px; border:2px solid black; border-radius:5px; font-size:15px;'>");
+
+		// Priority
+		out.println("<select id='filterPriority' name='priority' "
+		        + "style='padding:8px; width:140px; border:1px solid black; border-radius:4px;'>"
+		        + "<option value=''>Select Priority</option>"
+		        + "<option value='High'>High</option>"
+		        + "<option value='Medium'>Medium</option>"
+		        + "<option value='Low'>Low</option>"
+		        + "</select>");
+
+		// Date
+		out.println("<input type='date' id='filterDeadline' name='deadline' "
+		        + "style='padding:8px; border:1px solid black; border-radius:4px;'>");
+
+		// Button
+		out.println("<button type='button' id='filterBtn' "
+		        + "style='padding:8px 15px; border:none; background:#2d89ef; color:white; border-radius:4px; cursor:pointer;'>Filter</button>");
+
+		out.println("</div>");
+
+		out.println("<script>");
+		out.println("function loadTaskTable(){");
+		out.println(" var keyword=document.getElementById('searchBox').value;");
+		out.println(" var priority=document.getElementById('filterPriority').value;");
+		out.println(" var deadline=document.getElementById('filterDeadline').value;");
+
+		out.println(" fetch('search?taskList=pending&keyword='+keyword+'&priority='+priority+'&deadline='+deadline)");
+		out.println(" .then(response => response.text())");
+		out.println(" .then(data => {");
+		out.println("   var el=document.getElementById('taskContainer'); if(el) el.innerHTML=data;");
+		out.println(" });");
+		out.println("}");
+
+		out.println("document.getElementById('searchBox').onkeyup=loadTaskTable;");
+		out.println("document.getElementById('filterBtn').onclick=loadTaskTable;");
+		out.println("</script>");
 
 		List<TaskModel> list = taskService.listPendingTasksForUser(userId);
 
+		out.println("<div id='taskContainer'>");
 		if (list.isEmpty()) {
 			out.println("<p>No pending or in-progress tasks.</p>");
 		} else {
@@ -75,6 +117,7 @@ public class PendingTasksServlet extends HttpServlet {
 			out.println("</table>");
 			out.println("</div>");
 		}
+		out.println("</div>");
 
 		out.println("</div></div>");
 		out.println(WELCOME_JS);
